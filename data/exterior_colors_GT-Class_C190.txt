@@ -1,0 +1,13 @@
+[
+	{"color_code": "590_fire_opal|yha", "url_code": "yha", "name": "590_fire_opal"},
+    {"color_code": "040_black|mWa", "url_code": "mWa", "name": "040_black"},
+	{"color_code": "278_AMG_solarbeam|KRB", "url_code": "KRB", "name": "278_AMG_solarbeam"},
+	{"color_code": "775_iridium_silver|nRi", "url_code": "nRi", "name": "775_iridium_silver"},
+	{"color_code": "992_selenite_grey|0h1", "url_code": "0h1", "name": "992_selenite_grey"},
+	{"color_code": "896_brilliant_blue_metallic|thk", "url_code": "thk", "name": "896_brilliant_blue_metallic"},
+	{"color_code": "183_magnetite_black|e9F", "url_code": "e9F", "name": "183_magnetite_black"},
+	{"color_code": "799_diamond_white|nh3", "url_code": "nh3", "name": "799_diamond_white"},
+	{"color_code": "982_iridium_silver_magno|091", "url_code": "091", "name": "982_iridium_silver_magno"},
+	{"color_code": "996_hyacinth_red|0hk", "url_code": "0hk", "name": "996_hyacinth_red"},
+	{"color_code": "297_selenite_grey_magno|KhP", "url_code": "KhP", "name": "297_selenite_grey_magno"}
+]

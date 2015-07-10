@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/jquery-picklist/jquery.ui.widget.js"></script>
+        <script type="text/javascript" src="js/jquery-picklist/jquery-picklist.js"></script>
+        <script type="text/javascript" src="js/loader/loading-overlay.min.js"></script>
+
+        <link type="text/css" href="js/jquery-picklist/jquery-picklist.css" rel="stylesheet" />
+        <link type="text/css" href="js/loader/demo.css" rel="stylesheet" />
+        <script>
+
+            $(function()
+            {
+                $.getJSON('data/exterior_colors.json', function(data) {
+                    $.each(data, function(index) {
+                        $('#colors').append($('<option>').text(data[index].name).attr('value', data[index].color_code));
+                    });
+                    $("#colors").pickList();
+                });
+
+
+
+
+            });
+            $(document).ready(function() {
+
+
+                var urls = [];
+                $("#addbutton").click(function() {
+                    var url = $("#url").val();
+                    if (url.length > 0) {
+
+                        var colors = $("#colors").val();
+
+                        var urlCode = url + "@" + colors;
+                        urls.push(urlCode);
+
+                        var $li = $("<li />").text(colors);
+                        $("#url_listing").append($li);
+//                        clearUI();
+                        $("#url").val("");
+                    }
+
+                });
+                $("#clearbutton").click(function() {
+                    urls = [];
+                    clearUI();
+//                    $("#colors").pickList("destroy");
+//                    $("#colors").pickList();
+                });
+
+                var clearUI = function() {
+                    $("#url_listing").empty();
+                    $("#result").empty();
+                    $("#url").val("");
+                    $("#foldername").val("");
+                };
+
+                $("#submitbutton").click(function() {
+                    //            $.post("php/" + $("#forms").val(),{"urls", urls});
+                    //            $.post("index.php",{"urls", urls});
+                    //            $('#result').html('<img src="images/ajax-loader.gif"> loading...');
+                    var selectedForm = $("#forms").val();
+
+                    var colors = $("#colors").val();
+                    var foldername = $("#foldername").val();
+                    $("#target").loadingOverlay();
+
+                    $.post("php/index.php", {'foldername': foldername, 'colors': colors, 'selectedForm': selectedForm, 'urls[]': urls})
+                            .done(function(data) {
+                                $("#target").loadingOverlay('remove');
+
+                                $("#result").html(data);
+                            })
+                            .fail(function(data) {
+                                alert(data);
+                            });
+
+                });
+
+
+            });
+        </script>
+    </head>
+    <body>
+        <div id="target">
+
+
+            <form>
+
+                <textarea name="url" id="url" cols="100" rows="10"></textarea>
+                <br />
+
+
+                <div>
+                    <select id="colors" name="colors" multiple="multiple" size="20">
+
+                    </select>
+                    <br />
+                    <input type="button" value="Add" id="addbutton" />
+                    <input type="button" value="Clear" id="clearbutton" />
+                    <br />
+                    <ul id="url_listing">
+                    </ul>
+
+                    <br/>
+                    <label for="foldername">Folder Name</label>
+                    <input type="text" name="foldername" id="foldername"/>
+                    <br />
+                    <select name="forms" id="forms">
+                        <option value="1">360</option>
+                        <option value="2">Back Interior</option>
+                        <option value="3" selected="selected">Exterior</option>
+                        <option value="4">Front Interior</option>
+                    </select>
+                    <br />
+                    <input type="button" value="Submit" id="submitbutton" />
+                    <br />
+                </div>
+
+                <br />
+                <div id="result">
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
