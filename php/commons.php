@@ -87,6 +87,7 @@ function getContentTypeOfRemoteFile($url)
 
     # get the content type
     $info = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+    
     return $info;
 }
 
