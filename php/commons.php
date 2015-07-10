@@ -2,11 +2,7 @@
 $Toolkit_Dir = '../toolkit/';
        
 include $Toolkit_Dir . 'JPEG.php';                     
-// include $Toolkit_Dir . 'JFIF.php';
-// include $Toolkit_Dir . 'PictureInfo.php';
-// include $Toolkit_Dir . 'XMP.php';
-// include $Toolkit_Dir . 'Photoshop_IRB.php';
-// include $Toolkit_Dir . 'EXIF.php';
+
 
 function createFolder($folderPath) {
 //    $folderPath = "$folderBase/front_interior/$index";
