@@ -11,7 +11,7 @@
         <script>
             $(function()
             {
-                $.getJSON('data/exterior_colors.json', function(data) {
+                $.getJSON('data/exterior_colors_GLA-Class_x156.json', function(data) {
                     $.each(data, function(index) {
                         $('#colors').append($('<option>').text(data[index].name).attr('value', data[index].color_code));
                     });

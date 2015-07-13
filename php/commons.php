@@ -15,7 +15,7 @@ function exteriorImages($metadata,$image, $folderBase, $index, $colors, $ourAngl
     // echo "exterior images <br />";
     $folderName = $_POST['foldername'];
 //    $availUrlCodes = array("mWa", "e9F", "ehP", "XR5", "nRi", "nh1", "nh3", "tha", "thP", "09B", "0hB", "Khk", "yMk", "yha", "nji", "y93", "whk", "wja", "ehl", "yh1", "th5", "thF", "nUl", "n9P", "eU1", "wU1", "0hl", "0hF", "XR5", "0hk", "eW3", "0h9");
-    $jsonFile = file_get_contents("../data/exterior_colors.json");
+    $jsonFile = file_get_contents("../data/exterior_colors_GLA-Class_x156.json");
     $exteriorColors = json_decode($jsonFile, true);
 
     $availUrlCodes = array();
@@ -114,9 +114,9 @@ function loadAndwriteFileWidthHeight($metadata,$folderBase, $imagePath, $fileNam
           $folderPath = $toroot."$folderBase" . "$folderName/" . "$index";
           if (!file_exists($folderPath)) {
               //mkdir($folderPath, 0777, true);
-          if (!mkdir($folderPath, 0777, true)) {
-            die('Failed to create folders...');
-          }
+            if (!mkdir($folderPath, 0777, true)) {
+              die('Failed to create folders...');
+            }
           }
 
           $file = "$folderPath/$fileName";
