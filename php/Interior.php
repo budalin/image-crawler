@@ -2,11 +2,13 @@
 
 /**
  * Download Interior image for specific Class
+ * Date - 14/07/2015
+ * Version - 0.0.1
  */
 
 class Interior 
 {
-	public $folder_name = '';
+	
 	public $index = '';
 	public $base_folder = '';
 	public $image_url = '';
@@ -31,7 +33,7 @@ class Interior
 		return $this;
 	}
 
-	function interior_image($this->image_url, $this->folder_name, $this->index, $this->colors, $this->our_colors)
+	function interior_image($this->image_url, $this->base_folder, $this->index, $this->colors, $this->our_colors)
 	{
 
 	}

@@ -6,6 +6,7 @@ include '360-exterior.php';
 include 'back-interior.php';
 include 'exterior-auto.php';
 include 'front-interior.php';
+include 'Interior.php';
 include 'commons.php';
 
 $urls = $_POST['urls'];
@@ -54,7 +55,5 @@ foreach ($urls as $url)
     }
     $index++;
 }
-
-
 
 ?>

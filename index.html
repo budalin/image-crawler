@@ -11,7 +11,7 @@
         <script>
             $(function()
             {
-                $.getJSON('data/exterior_colors_GLA-Class_x156.json', function(data) {
+                $.getJSON('data/test.json', function(data) {
                     $.each(data, function(index) {
                         $('#colors').append($('<option>').text(data[index].name).attr('value', data[index].color_code));
                     });
@@ -138,6 +138,8 @@
                         <option value="2">Back Interior</option>
                         <option value="3" selected="selected">Exterior</option>
                         <option value="4">Front Interior</option>
+                        <option value="5">Interior</option>
+
                     </select>
                     <br />
                     <br/>
