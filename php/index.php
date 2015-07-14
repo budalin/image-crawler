@@ -52,6 +52,15 @@ foreach ($urls as $url)
         //front interior
         frontInterior($url[0], $baseFolder, $index);
         break;
+    case 5:
+        $Interior = new Interior();
+        
+        // $Interior->set('json','test.json');
+        // $json = $Interior->get('json');
+        // $available_code = $Interior->available_colors($json);
+        // print_r( $available_code );echo '<br/>';
+        // print_r(explode(",", $urlColors[1]));echo '<br/>';
+        echo $Interior->get('our_colors');exit;
     }
     $index++;
 }

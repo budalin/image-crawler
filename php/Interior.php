@@ -9,44 +9,54 @@
 class Interior 
 {
 	
-	public $index = '';
-	public $base_folder = '';
-	public $image_url = '';
-	public $colors = '';
-	public $our_colors = '';
-	public $json = '';
+	public $index;
+	public $base_folder;
+	public $image_url;
+	public $colors;
+	public $our_colors;
+	public $json;
 	
-	function __get($property)
+	function get($property)
 	{
-		if(property_exists($this, $property)) {
-			return $this->property;
-		}
+		
+		return $this->property;	
+	}
+
+	function set($property,$value)
+	{
+		$this->property = $value;
 		
 	}
 
-	function __set($property, $value)
+	// function interior_image($this->image_url, $this->base_folder, $this->index, $this->colors, $this->our_colors)
+	// {
+
+	// }
+
+	function available_colors($json)
 	{
-		if(property_exists($this, $property)) {
-			$this->property = $value;
-		}
-
-		return $this;
-	}
-
-	function interior_image($this->image_url, $this->base_folder, $this->index, $this->colors, $this->our_colors)
-	{
-
-	}
-
-	function available_colors($this->json)
-	{
+		$jsonFile = file_get_contents('../data/'.$json);
+    	$interiorColors = json_decode($jsonFile, true);
     	$url_codes = array();
 
-		foreach ($this->json as $color_codes) {
+		foreach ($interiorColors as $color_codes) {
 			$url_codes[] = $color_codes['url_code'];
 		}
 
 		return $url_codes;
+	}
+
+	function change_name($index)
+	{
+		switch ($index) {
+			case 'value':
+				# code...
+				break;
+			
+			default:
+				# code...
+				break;
+		}
 	}
 }
 
