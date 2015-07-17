@@ -1,5 +1,32 @@
 [
-    {"color_code": "801_leather_black|rWF", "url_code": "rWF", "name": "801_leather_black"},
-	{"color_code": "804_leather_nutbrown|rWe", "url_code": "rWe", "name": "804_leather_nutbrown"},
-	{"color_code": "805_leather_saharabeige|rWg", "url_code": "rWg", "name": "805_leather_saharabeige"}
+   {
+      "color_code": "801_leather_black|rWF",
+      "url_code": "rWF",
+      "name": "801_leather_black"
+   },
+   {
+      "color_code": "804_leather_nutbrown|rWe",
+      "url_code": "rWe",
+      "name": "804_leather_nutbrown"
+   },
+   {
+      "color_code": "805_leather_saharabeige|rWg",
+      "url_code": "rWg",
+      "name": "805_leather_saharabeige"
+   },
+   {
+      "color_code": "night_black|whk",
+      "url_code": "whk",
+      "name": "night_black"
+   },
+   {
+      "color_code": "orientbraun_metallic|0ha",
+      "url_code": "0ha",
+      "name": "orientbraun_metallic"
+   },
+   {
+      "color_code": "sea_blue|eU1",
+      "url_code": "eU1",
+      "name": "sea_blue"
+   }
 ]
