@@ -11,7 +11,7 @@
         <script>
             $(function()
             {
-                $.getJSON('data/test.json', function(data) {
+                $.getJSON('data/interior_colors.json', function(data) {
                     $.each(data, function(index) {
                         $('#colors').append($('<option>').text(data[index].name).attr('value', data[index].color_code));
                     });
@@ -24,6 +24,24 @@
             });
             $(document).ready(function() {
 
+                /*$('#car-class').bind('change', function(){
+                   switch($(this).val()){
+                        case 'gla':
+                            {
+                                $json = 'test.json';
+                            } break;
+                        case 'e':
+                            {
+                                $json = 'interior_colors_E-Class.json';
+                            } break;
+                   }
+                    $.getJSON('data/'+$json, function(data) {
+                        $.each(data, function(index) {
+                            $('#colors').append($('<option>').text(data[index].name).attr('value', data[index].color_code));
+                        });
+                        $("#colors").pickList();
+                    });
+                });*/
 
                 var urls = [];
                 $("#addbutton").click(function() {
@@ -52,10 +70,12 @@
                 });
 
                 var clearUI = function() {
+
                     $("#url_listing").empty();
                     $("#result").empty();
                     $("#url").val("");
                     $("#foldername").val("");
+
                 };
                 
                 // Add row 
@@ -120,8 +140,16 @@
         <div id="target">
             <form>
                 <textarea name="url" id="url" cols="100" rows="10"></textarea>
+                <!-- <br />
                 <br />
                 <div>
+                    <label for="class">Car Class</label>
+                    <select name="forms" id="car-class">
+                        <option value="e">E-Class</option>
+                        <option value="gla" selected="selected">GLA-Class</option>
+                        
+                    </select>
+                    <br /> -->
                     <select id="colors" name="colors" multiple="multiple" size="20"></select>
                     <br />
                     <input type="button" value="Add" id="addbutton" />
@@ -136,9 +164,9 @@
                     <select name="forms" id="forms">
                         <option value="1">360</option>
                         <option value="2">Back Interior</option>
-                        <option value="3" selected="selected">Exterior</option>
+                        <option value="3">Exterior</option>
                         <option value="4">Front Interior</option>
-                        <option value="5">Interior</option>
+                        <option value="5" selected="selected">Interior</option>
 
                     </select>
                     <br />
