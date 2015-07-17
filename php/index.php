@@ -12,6 +12,7 @@ include 'commons.php';
 $urls = $_POST['urls'];
 $selectedForm= $_POST['selectedForm'];
 $colors = $_POST['colors'];
+$foldername = $_POST['foldername'];
 $metadata = $_POST['metadata'];
 
 
@@ -50,17 +51,14 @@ foreach ($urls as $url)
         break;
     case 4:
         //front interior
-        frontInterior($url[0], $baseFolder, $index);
+        frontInterior($urlColors[0], $baseFolder, $index);
         break;
     case 5:
         $Interior = new Interior();
         
-        // $Interior->set('json','test.json');
-        // $json = $Interior->get('json');
-        // $available_code = $Interior->available_colors($json);
-        // print_r( $available_code );echo '<br/>';
-        // print_r(explode(",", $urlColors[1]));echo '<br/>';
-        echo $Interior->get('our_colors');exit;
+        $Interior->interior_image($metadata, $urlColors[0], $foldername, explode(",", $urlColors[1]));
+        // $Interior->dump($available_code);
+        
     }
     $index++;
 }
