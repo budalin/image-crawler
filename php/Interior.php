@@ -63,9 +63,8 @@ class Interior
 	function interior_image($metadata, $image_url, $foldername, $colors)
 	{
 		$available_codes = Self::__available('interior_colors.json');
-		$interior_trims = array('cIQC3','5MQC3','5uQC3');
-		$available_trims = Self::__available('interior_trim_colors.json');
-		$interior_views = array('IMGT=A4&POV=BI4','IMGT=A4&POV=BI3','IMGT=A4&POV=BI2');
+		
+		$interior_views = array('IMGT=A27&POV=BI1','IMGT=A27&POV=BI2','IMGT=A27&POV=BI3');
 		$available_views = array('IMGT=A27&POV=BI1','IMGT=A27&POV=BI2','IMGT=A27&POV=BI3','IMGT=A27&POV=BI4','IMGT=A4&POV=BI4','IMGT=A4&POV=BI3','IMGT=A4&POV=BI2','IMGT=A4&POV=BI1');
 		
 		// Self::dump($available_trims);exit;
@@ -106,20 +105,23 @@ class Interior
 	                if (strpos($new_image_url, $available_views[$k])):
                     
 	                    $new_view = str_replace("$available_views[$k]", "$interior_views[$j]", $new_image_url);
-	                	$gg[] = $new_view;
+	                	
 						switch($j){
 							case 0:
-				                $filename = $filenames[$i].'_front_back.jpg';
+				                $filename = $filenames[$i].'_front_dashboard';
 				                break;
 				            case 1:
-				                $filename = $filenames[$i].'_back.jpg';
+				                $filename = $filenames[$i].'_front_setie';
 				                break;
 				            case 2:
-				                $filename = $filenames[$i].'_front.jpg';
+				                $filename = $filenames[$i].'_back';
 				                break;
 
 						}	
-						// Self::write_into_file($metadata, $foldername, $filename, $new_view);
+						$gg[] = $new_view.'|'.$filename;
+
+						
+						//Self::write_into_file($metadata, $foldername, $filename, $new_view);
 						// echo 'Found view in ->'.$i.' '.$k;
 						// Self::dump($new_image_url);
 
@@ -130,13 +132,52 @@ class Interior
 			endfor;
 
 		endfor;
-		
-		Self::dump($gg);exit;
+
+		Self::trims($metadata,$gg,$foldername);
+		// Self::dump($gg);exit;
 
 	}
 
-	static function trims($metadata,$image_urls)
+	static function trims($metadata,$image_urls,$foldername)
 	{
+		$trims = array('cIQC3','5MQC3','5uQC3');
+		$available_trims = Self::__available('interior_trim_colors.json');
+		for ($z=0; $z < count($image_urls) ; $z++) : 
+			$explode = explode('|', $image_urls[$z]);
+			$url = $explode[0];
+			$filenames[] = $explode[1];
+			for ($t=0; $t < count($trims); $t++):
+
+				for ($x=0; $x < count($available_trims); $x++): 
+					
+					if(strpos($url, $available_trims[$x])):
+
+						$new_trim = str_replace($available_trims[$x],$trims[$t],$url);
+						switch($t){
+							case 0:
+				                $filename = $filenames[$z].'_carbon.jpg';
+				                break;
+				            case 1:
+				                $filename = $filenames[$z].'_light_brown.jpg';
+				                break;
+				            case 2:
+				                $filename = $filenames[$z].'_gloss_brown.jpg';
+				                break;
+
+						}	
+						
+						Self::write_into_file($metadata, $foldername, $filename, $new_trim);
+
+						$zz[] = $new_trim.'|'.$filename;
+
+					endif;
+
+				endfor;
+
+			endfor;
+
+		endfor;
+		// Self::dump($zz);exit;
 
 	}
 
@@ -166,7 +207,8 @@ class Interior
 	        else:
 	            die('File put failed');
 	        endif;
-
+	    else:
+	    	echo "Can not find image while processing for <span class='highlight'>{ $filename }</span>.<br/>";
     	
     	endif;
 
