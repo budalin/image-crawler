@@ -169,7 +169,7 @@ html {
   text-align: right;
 }
 
-#target {
+/*#target {
   clear: both;
   width: 100%;
   height: 2em;
@@ -177,7 +177,7 @@ html {
   padding: 0 0 55% 1em;
   border: 0px solid black;
   text-align: left;
-}
+}*/
 
 #css-input:checked ~ #target {
   background: url('http://placekitten.com/g/800/600') no-repeat;
@@ -219,13 +219,13 @@ label[for="css-input"] {
   padding-top: 3em;
 }
 
-pre {
+/*pre {
   overflow: auto;
   font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace, serif;
   font-size: .85em;
   line-height: 1.5em;
   color: grey;
-}
+}*/
 
 .code-samples .js {
   float: left;
