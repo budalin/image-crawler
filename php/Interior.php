@@ -156,17 +156,20 @@ class Interior
 						switch($t){
 							case 0:
 				                $filename = $filenames[$z].'_carbon.jpg';
+				                $trim_folder = '/Carbon';
 				                break;
 				            case 1:
 				                $filename = $filenames[$z].'_light_brown.jpg';
+				                $trim_folder = '/Light Brown';
 				                break;
 				            case 2:
 				                $filename = $filenames[$z].'_gloss_brown.jpg';
+				                $trim_folder = '/Gloss Brown';
 				                break;
 
 						}	
 						
-						Self::write_into_file($metadata, $foldername, $filename, $new_trim);
+						Self::write_into_file($metadata, $foldername, $filename, $new_trim,$trim_folder);
 
 						$zz[] = $new_trim.'|'.$filename;
 
@@ -181,7 +184,7 @@ class Interior
 
 	}
 
-	static function write_into_file($metadata, $foldername, $filename, $image_url)
+	static function write_into_file($metadata, $foldername, $filename, $image_url,$trim_folder)
 	{
     	$base_folder = "images/";
 		$toroot = $_SERVER['DOCUMENT_ROOT'] .$_SERVER['REQUEST_URI'];
@@ -189,24 +192,26 @@ class Interior
 		$curl_info = Self::get_info_remote_file($image_url);
 
 		if($curl_info == 'image/jpeg'):
-    		$folderpath = $toroot.$base_folder.$foldername;
-				$content = file_get_contents($image_url);
-				if(!file_exists($folderpath)):
-	  				if(!mkdir($folderpath, 0777, true)):
-	  					die('Folder create failed ');
-	  				endif;
-				endif;
 
-				$file = $folderpath.'/'.$filename;
-				$filePut = file_put_contents($file, $content);
-	        if($filePut):
-	            chmod($file, 0777);
-	            $jpeg_header_data = get_jpeg_header_data( $file );
-	            $new_header_data = put_jpeg_Comment( $jpeg_header_data, $metadata );
-	            put_jpeg_header_data($file,$file,$new_header_data);
-	        else:
-	            die('File put failed');
-	        endif;
+
+				$folderpath = $toroot.$base_folder.$foldername.$trim_folder;
+					$content = file_get_contents($image_url);
+					if(!file_exists($folderpath)):
+		  				if(!mkdir($folderpath, 0777, true)):
+		  					die('Folder create failed ');
+		  				endif;
+					endif;
+
+					$file = $folderpath.'/'.$filename;
+					$filePut = file_put_contents($file, $content);
+		        if($filePut):
+		            chmod($file, 0777);
+		            $jpeg_header_data = get_jpeg_header_data( $file );
+		            $new_header_data = put_jpeg_Comment( $jpeg_header_data, $metadata );
+		            put_jpeg_header_data($file,$file,$new_header_data);
+		        else:
+		            die('File put failed');
+		        endif;
 	    else:
 	    	echo "Can not find image while processing for <span class='highlight'>{ $filename }</span>.<br/>";
     	
