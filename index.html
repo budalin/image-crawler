@@ -11,7 +11,7 @@
         <script>
             $(function()
             {
-                $.getJSON('data/interior_colors.json', function(data) {
+                $.getJSON('data/interior_colors_B-Class.json', function(data) {
                     $.each(data, function(index) {
                         $('#colors').append($('<option>').text(data[index].name).attr('value', data[index].color_code));
                     });

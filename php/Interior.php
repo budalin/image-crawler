@@ -62,10 +62,10 @@ class Interior
 	 */
 	function interior_image($metadata, $image_url, $foldername, $colors)
 	{
-		$available_codes = Self::__available('interior_colors.json');
+		$available_codes = Self::__available('interior_colors_B-Class.json');
 		
 		$interior_views = array('IMGT=A27&POV=BI1','IMGT=A27&POV=BI2','IMGT=A27&POV=BI3');
-		$available_views = array('IMGT=A27&POV=BI1','IMGT=A27&POV=BI2','IMGT=A27&POV=BI3','IMGT=A27&POV=BI4','IMGT=A4&POV=BI4','IMGT=A4&POV=BI3','IMGT=A4&POV=BI2','IMGT=A4&POV=BI1');
+		$available_views = array('IMGT=A27&POV=BI1','IMGT=A27&POV=BI2','IMGT=A27&POV=BI3','IMGT=A27&POV=BI4');
 		
 		// Self::dump($available_trims);exit;
 		
@@ -108,13 +108,13 @@ class Interior
 	                	
 						switch($j){
 							case 0:
-				                $filename = $filenames[$i].'_front_dashboard';
+				                $filename = $filenames[$i].'_front_dashboard.jpg';
 				                break;
 				            case 1:
-				                $filename = $filenames[$i].'_front_setie';
+				                $filename = $filenames[$i].'_front_settie.jpg';
 				                break;
 				            case 2:
-				                $filename = $filenames[$i].'_back';
+				                $filename = $filenames[$i].'_back.jpg';
 				                break;
 
 						}	
@@ -133,15 +133,18 @@ class Interior
 
 		endfor;
 
-		Self::trims($metadata,$gg,$foldername);
-		// Self::dump($gg);exit;
+		//Self::trims($metadata,$gg,$foldername);
+		Self::dump($gg);exit;
 
 	}
 
 	static function trims($metadata,$image_urls,$foldername)
 	{
-		$trims = array('cIQC3','5MQC3','5uQC3');
-		$available_trims = Self::__available('interior_trim_colors.json');
+		$trims = Self::__available('interior_trim_colors_B-Class.json');
+		$available_trims = Self::__available('interior_trim_colors_B-Class.json');
+		$trim_folders = Self::__available('interior_trim_colors_B-Class.json',TRUE);
+		// Self::dump($available_trims);exit;
+
 		for ($z=0; $z < count($image_urls) ; $z++) : 
 			$explode = explode('|', $image_urls[$z]);
 			$url = $explode[0];
@@ -155,23 +158,23 @@ class Interior
 						$new_trim = str_replace($available_trims[$x],$trims[$t],$url);
 						switch($t){
 							case 0:
-				                $filename = $filenames[$z].'_carbon.jpg';
-				                $trim_folder = '/Carbon';
+				                //$filename = $filenames[$z].'_carbon.jpg';
+				                $trim_folder = "/$trim_folders[$t]";
 				                break;
 				            case 1:
-				                $filename = $filenames[$z].'_light_brown.jpg';
-				                $trim_folder = '/Light Brown';
+				                //$filename = $filenames[$z].'_light_brown.jpg';
+				                $trim_folder = "/$trim_folders[$t]";
 				                break;
 				            case 2:
-				                $filename = $filenames[$z].'_gloss_brown.jpg';
-				                $trim_folder = '/Gloss Brown';
+				                //$filename = $filenames[$z].'_gloss_brown.jpg';
+				                $trim_folder = "/$trim_folders[$t]";
 				                break;
 
 						}	
 						
-						Self::write_into_file($metadata, $foldername, $filename, $new_trim,$trim_folder);
+						Self::write_into_file($metadata, $foldername, $filenames[$z], $new_trim,$trim_folder);
 
-						$zz[] = $new_trim.'|'.$filename;
+						// $zz[] = $new_trim.'|'.$filename;
 
 					endif;
 
@@ -219,18 +222,23 @@ class Interior
 
 	}
 
-	static function __available($json)
+	static function __available($json,$name = false)
 	{
 		$jsonFile = file_get_contents('../data/'.$json);
     	$interiorColors = json_decode($jsonFile, true);
-    	
-    	
 
-		foreach ($interiorColors as $color_codes) {
-			$available[] = $color_codes['url_code'];
+		if($name == TRUE):
+			foreach ($interiorColors as  $color_codes) :
+
+				$available[] = $color_codes['name'];
+				
+			endforeach;
+		else:
+			foreach ($interiorColors as $color_codes) :
+				$available[] = $color_codes['url_code'];
 			
-		}
-		
+			endforeach;
+		endif;
 		return $available;
 	}
 
