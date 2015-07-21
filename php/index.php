@@ -1,6 +1,6 @@
 <?php
 
-ini_set('max_execution_time', 800);
+ini_set('max_execution_time', 1600);
 
 include '360-exterior.php';
 include 'back-interior.php';

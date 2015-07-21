@@ -62,7 +62,7 @@ class Interior
 	 */
 	function interior_image($metadata, $image_url, $foldername, $colors)
 	{
-		$available_codes = Self::__available('interior_colors_B-Class.json');
+		$available_codes = Self::__available('interior_colors_E-Class.json');
 		
 		$interior_views = array('IMGT=A27&POV=BI1','IMGT=A27&POV=BI2','IMGT=A27&POV=BI3');
 		$available_views = array('IMGT=A27&POV=BI1','IMGT=A27&POV=BI2','IMGT=A27&POV=BI3','IMGT=A27&POV=BI4');
@@ -105,10 +105,11 @@ class Interior
 	                if (strpos($new_image_url, $available_views[$k])):
                     
 	                    $new_view = str_replace("$available_views[$k]", "$interior_views[$j]", $new_image_url);
-	                	
+	                	$uphostery_folder = "/$filenames[$i]";
 						switch($j){
 							case 0:
 				                $filename = $filenames[$i].'_front_dashboard.jpg';
+
 				                break;
 				            case 1:
 				                $filename = $filenames[$i].'_front_settie.jpg';
@@ -121,7 +122,7 @@ class Interior
 						$gg[] = $new_view.'|'.$filename;
 
 						
-						//Self::write_into_file($metadata, $foldername, $filename, $new_view);
+						Self::write_into_file($metadata, $foldername, $filename, $new_view,$uphostery_folder);
 						// echo 'Found view in ->'.$i.' '.$k;
 						// Self::dump($new_image_url);
 
@@ -134,15 +135,16 @@ class Interior
 		endfor;
 
 		//Self::trims($metadata,$gg,$foldername);
-		Self::dump($gg);exit;
+		// Self::dump($gg);exit;
 
 	}
 
+	# loop available trims colors 
 	static function trims($metadata,$image_urls,$foldername)
 	{
-		$trims = Self::__available('interior_trim_colors_B-Class.json');
-		$available_trims = Self::__available('interior_trim_colors_B-Class.json');
-		$trim_folders = Self::__available('interior_trim_colors_B-Class.json',TRUE);
+		$trims = Self::__available('interior_trim_colors_E-Class.json');
+		$available_trims = Self::__available('interior_trim_colors_E-Class.json');
+		$trim_folders = Self::__available('interior_trim_colors_E-Class.json',TRUE);
 		// Self::dump($available_trims);exit;
 
 		for ($z=0; $z < count($image_urls) ; $z++) : 
@@ -174,7 +176,7 @@ class Interior
 						
 						Self::write_into_file($metadata, $foldername, $filenames[$z], $new_trim,$trim_folder);
 
-						// $zz[] = $new_trim.'|'.$filename;
+						$zz[] = $new_trim;
 
 					endif;
 
@@ -187,7 +189,7 @@ class Interior
 
 	}
 
-	static function write_into_file($metadata, $foldername, $filename, $image_url,$trim_folder)
+	static function write_into_file($metadata, $foldername, $filename, $image_url,$uphostery_folder)
 	{
     	$base_folder = "images/";
 		$toroot = $_SERVER['DOCUMENT_ROOT'] .$_SERVER['REQUEST_URI'];
@@ -197,7 +199,9 @@ class Interior
 		if($curl_info == 'image/jpeg'):
 
 
-				$folderpath = $toroot.$base_folder.$foldername.$trim_folder;
+				$folderpath = $toroot.$base_folder.$foldername.$uphostery_folder;
+				// $folderpath = $toroot.$base_folder.$foldername;
+
 					$content = file_get_contents($image_url);
 					if(!file_exists($folderpath)):
 		  				if(!mkdir($folderpath, 0777, true)):
