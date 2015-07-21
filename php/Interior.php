@@ -189,6 +189,7 @@ class Interior
 
 	}
 
+	
 	static function write_into_file($metadata, $foldername, $filename, $image_url,$uphostery_folder)
 	{
     	$base_folder = "images/";
