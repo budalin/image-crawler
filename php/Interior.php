@@ -1,11 +1,14 @@
 <?php
 
 /**
- * Download Interior image for specific Class
+ * Purpose - Download Interior image for specific car class
  * Date - 14/07/2015
- * Author - htunlinnaung
+ * Credit to- Exterior image creator
+ * Modify by - htunlinnaung
  * Version - 0.0.1
  */
+
+namespace ImageCrawler;
 
 class Interior 
 {
@@ -38,22 +41,7 @@ class Interior
 		endif;
 	}
 	
-	/**
-	 * Getter Method
-	 */
-	function get($property)
-	{		
-		return $this->property;	
-	}
-
-	/**
-	 * Setter Method
-	 */
-	function set($property,$value)
-	{
-		$this->property = $value;		
-	}
-
+	
 	/**
 	 * $metada(string) - Key-Value pair from the form input
 	 * $image_url(string) - Image URL from the form input
@@ -73,6 +61,7 @@ class Interior
 
 			#loop for color picker
 			for($i = 0; $i<count($colors); $i++):
+
 				$codecolor = explode('|', $colors[$i]);
 				$filenames[] = $codecolor[0];
 				$urlcodes[] = $codecolor[1];
@@ -106,6 +95,7 @@ class Interior
                     
 	                    $new_view = str_replace("$available_views[$k]", "$interior_views[$j]", $new_image_url);
 	                	$uphostery_folder = "/$filenames[$i]";
+
 						switch($j){
 							case 0:
 				                $filename = $filenames[$i].'_front_dashboard.jpg';
@@ -135,11 +125,16 @@ class Interior
 		endfor;
 
 		//Self::trims($metadata,$gg,$foldername);
-		// Self::dump($gg);exit;
+		//Self::dump($gg);exit;
 
 	}
 
-	# loop available trims colors 
+	
+	/**
+	  * $metada(string) - Key-Value pair from the form input
+	  * $image_urls(array) - New image urls arrray from interior_image function
+	  * $folder_name(string) - Folder name from the form input
+	  */ 
 	static function trims($metadata,$image_urls,$foldername)
 	{
 		$trims = Self::__available('interior_trim_colors_E-Class.json');
@@ -158,6 +153,7 @@ class Interior
 					if(strpos($url, $available_trims[$x])):
 
 						$new_trim = str_replace($available_trims[$x],$trims[$t],$url);
+
 						switch($t){
 							case 0:
 				                //$filename = $filenames[$z].'_carbon.jpg';
@@ -189,7 +185,14 @@ class Interior
 
 	}
 
-	
+	/**
+	 @ return type - JPEG file
+	 @ return detail - create image accordingly from url 
+	 * $metadata - key:value pairs from form input
+	 * $foldername - folder name from form input 
+	 * $image_url - URL string from interior_image function
+	 * $uphostery_folder - folder name from interior_image function
+	 */
 	static function write_into_file($metadata, $foldername, $filename, $image_url,$uphostery_folder)
 	{
     	$base_folder = "images/";
@@ -227,6 +230,13 @@ class Interior
 
 	}
 
+	/**
+	 @ return type - Array
+	 @ return detail - load json file for specific car class
+	 * $json(json) - name of the json file to load(e.g - interior_trim_colors_E-Class.json)
+	 * $name(bool) - for return only name array if TRUE
+	 *
+	 */
 	static function __available($json,$name = false)
 	{
 		$jsonFile = file_get_contents('../data/'.$json);
@@ -247,6 +257,10 @@ class Interior
 		return $available;
 	}
 
+	/**
+	 @ return type - String 
+	 @ return detail - check image type from given url(e.g - image/jpeg,image/png)
+	 */
 	static function get_info_remote_file($url)
 	{
 	    $ch = curl_init($url);
@@ -258,10 +272,13 @@ class Interior
 	    # get the content type
 	    $info = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
 	    curl_close($ch);
-	    
+
 	    return $info;
 	}
 
 
 }
+
+// end of file Interior.php
+// file location - image_crawler/php/Interior.php
 
