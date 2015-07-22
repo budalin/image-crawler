@@ -8,15 +8,3 @@ try {
 } catch(PDOException $e) {
     die('Could not connect to the database:<br/>' . $e);
 }
-
-$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-$statement = $db->prepare("SELECT * FROM `items` WHERE `side_shop` = :side");
-// $statement->bindValue(':side','1');
-$statement->execute(array(':side'=>'1'));
-
-$items = $statement->FetchAll();
-//echo $db->exec($statement);
-//echo $foods->rowCount();
-foreach($items as $item) {
-    echo $item['localized_name'] . '<br />';
-}
