@@ -257,6 +257,7 @@ class Interior
 
 	    # get the content type
 	    $info = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+	    curl_close($ch);
 	    
 	    return $info;
 	}
