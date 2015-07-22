@@ -54,7 +54,7 @@ foreach ($urls as $url)
         frontInterior($urlColors[0], $baseFolder, $index);
         break;
     case 5:
-        $Interior = new Interior();
+        $Interior = new \ImageCrawler\Interior();
         
         $Interior->interior_image($metadata, $urlColors[0], $foldername, explode(",", $urlColors[1]));
         // $Interior->dump($available_code);
