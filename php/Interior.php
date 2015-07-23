@@ -50,7 +50,7 @@ class Interior
 	 */
 	function interior_image($metadata, $image_url, $foldername, $colors)
 	{
-		$available_codes = Self::__available('interior_colors_E-Class.json');
+		$available_codes = Self::__available('interior_colors_B-Class.json');
 		
 		$interior_views = array('IMGT=A27&POV=BI1','IMGT=A27&POV=BI2','IMGT=A27&POV=BI3');
 		$available_views = array('IMGT=A27&POV=BI1','IMGT=A27&POV=BI2','IMGT=A27&POV=BI3','IMGT=A27&POV=BI4');
@@ -60,7 +60,8 @@ class Interior
 		if(is_array($colors)):
 
 			#loop for color picker
-			for($i = 0; $i<count($colors); $i++):
+			$count_colors = count($colors);
+			for($i = 0; $i < $count_colors; $i++):
 
 				$codecolor = explode('|', $colors[$i]);
 				$filenames[] = $codecolor[0];
@@ -69,9 +70,14 @@ class Interior
 			endfor;
 		endif;	
 		
-		for ($i=0; $i < count($urlcodes); $i++): 
+		$count_urlcodes = count($urlcodes);
+		$count_available_codes = count($available_codes);
+		$count_interior_views = count($interior_views);
+		$count_available_views = count($available_views);
+
+		for ($i=0; $i < $count_urlcodes; $i++): 
 			
-			for ($j=0; $j < count($available_codes); $j++):
+			for ($j=0; $j < $count_available_codes; $j++):
 
 				$urlcode = $available_codes[$j];
 
@@ -86,10 +92,10 @@ class Interior
 			endfor;
 
 			# loop for view
-			for ($j=0; $j < count($interior_views); $j++) : 
+			for ($j=0; $j < $count_interior_views; $j++) : 
 
 				
-				for ($k=0; $k < count($available_views) ; $k++):
+				for ($k=0; $k < $count_available_views ; $k++):
 
 	                if (strpos($new_image_url, $available_views[$k])):
                     
@@ -125,7 +131,7 @@ class Interior
 		endfor;
 
 		//Self::trims($metadata,$gg,$foldername);
-		//Self::dump($gg);exit;
+		// Self::dump($gg);exit;
 
 	}
 
