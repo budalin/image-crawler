@@ -4,7 +4,7 @@
  * Purpose - Download Interior image for specific car class
  * Date - 14/07/2015
  * Credit to- Exterior image creator
- * Modify by - htunlinnaung
+ * Modify by - htunlinnaung(htunlinnaung@appvantage.sg)
  * Version - 0.0.1
  */
 
@@ -13,19 +13,11 @@ namespace ImageCrawler;
 class Interior 
 {
 	
-	public $index;
-	public $base_folder;
-	public $image_url;
-	public $colors;
-	public $our_colors;
-	public $json;
-
-	
-	/*public function __construct()
-	{
-		$Toolkit_Dir = '../toolkit/';
-		include $Toolkit_Dir . 'JPEG.php';                     
-	}*/
+	var $metadata;
+	var $image_url;
+	var $foldername;
+	var $colors;
+	var $json;
 
 	/*
 	* Tracing purpose only
@@ -50,12 +42,11 @@ class Interior
 	 */
 	function interior_image($metadata, $image_url, $foldername, $colors)
 	{
-		$available_codes = Self::__available('interior_colors_B-Class.json');
-		
-		$interior_views = array('IMGT=A27&POV=BI1','IMGT=A27&POV=BI2','IMGT=A27&POV=BI3');
-		$available_views = array('IMGT=A27&POV=BI1','IMGT=A27&POV=BI2','IMGT=A27&POV=BI3','IMGT=A27&POV=BI4');
-		
-		// Self::dump($available_trims);exit;
+				
+		$interior_views = array('IMGT=A27&POV=BI1','IMGT=A27&POV=BI2','IMGT=A27&POV=BI3','IMGT=A27&POV=BI4');
+		$get_color_code = Self::get_code($image_url,'d0VXq','qtyO35');//extract color code from url
+		$get_interior_view = Self::get_code($image_url,'&&',',SZT');//extract view code from url
+		// Self::dump($get_color_code);exit;
 		
 		if(is_array($colors)):
 
@@ -71,72 +62,53 @@ class Interior
 		endif;	
 		
 		$count_urlcodes = count($urlcodes);
-		$count_available_codes = count($available_codes);
 		$count_interior_views = count($interior_views);
-		$count_available_views = count($available_views);
+		
 
 		for ($i=0; $i < $count_urlcodes; $i++): 
-			
-			for ($j=0; $j < $count_available_codes; $j++):
 
-				$urlcode = $available_codes[$j];
-
-				if(strpos($image_url, $urlcode)):
-
-                	$new_image_url = str_replace($urlcode, $urlcodes[$i], $image_url);
-					// echo 'Found color in ->'.$i.' '.$j;
-                	// echo $new_image_url;
-					
-				endif;
-
-			endfor;
+        	$new_image_url = str_replace($get_color_code, $urlcodes[$i], $image_url);
 
 			# loop for view
 			for ($j=0; $j < $count_interior_views; $j++) : 
 
+
+                $new_view = str_replace($get_interior_view, "$interior_views[$j]", $new_image_url);
+            	$uphostery_folder = "/$filenames[$i]";
+
+				switch($j){
+					case 0:
+		                $filename = $filenames[$i].'_front_dashboard.jpg';
+		                break;
+		            case 1:
+		                $filename = $filenames[$i].'_front_settie.jpg';
+		                break;
+		            case 2:
+		                $filename = $filenames[$i].'_back_settie.jpg';
+		                break;
+		            case 3:
+		            	$filename = $filenames[$i].'_back_to_front.jpg';
+		                break;
+
+				}	
+				$gg[] = $new_view.'|'.$filename;
 				
-				for ($k=0; $k < $count_available_views ; $k++):
+				Self::write_into_file($metadata, $foldername, $filename, $new_view,$uphostery_folder);
 
-	                if (strpos($new_image_url, $available_views[$k])):
-                    
-	                    $new_view = str_replace("$available_views[$k]", "$interior_views[$j]", $new_image_url);
-	                	$uphostery_folder = "/$filenames[$i]";
+				// Self::dump($new_image_url);
 
-						switch($j){
-							case 0:
-				                $filename = $filenames[$i].'_front_dashboard.jpg';
-
-				                break;
-				            case 1:
-				                $filename = $filenames[$i].'_front_settie.jpg';
-				                break;
-				            case 2:
-				                $filename = $filenames[$i].'_back.jpg';
-				                break;
-
-						}	
-						$gg[] = $new_view.'|'.$filename;
-
-						
-						Self::write_into_file($metadata, $foldername, $filename, $new_view,$uphostery_folder);
-						// echo 'Found view in ->'.$i.' '.$k;
-						// Self::dump($new_image_url);
-
-					endif;
-
-				endfor;
-					
 			endfor;
 
 		endfor;
 
-		//Self::trims($metadata,$gg,$foldername);
+		// Self::trims($metadata,$gg,$foldername);
 		// Self::dump($gg);exit;
 
 	}
 
 	
 	/**
+	@ Pending to use this function :P
 	  * $metada(string) - Key-Value pair from the form input
 	  * $image_urls(array) - New image urls arrray from interior_image function
 	  * $folder_name(string) - Folder name from the form input
@@ -266,6 +238,7 @@ class Interior
 	/**
 	 @ return type - String 
 	 @ return detail - check image type from given url(e.g - image/jpeg,image/png)
+	 * $url - image url
 	 */
 	static function get_info_remote_file($url)
 	{
@@ -280,6 +253,25 @@ class Interior
 	    curl_close($ch);
 
 	    return $info;
+	}
+
+	/**
+	 @ retur type - string
+	 @ return detail - part of string from given string
+	 * $string - your desire string
+	 * $start - first charater string before your desire string
+	 * $end - second charater string after your desire string
+	 */
+	static function get_code($string, $start, $end)
+	{
+		$pos = stripos($string, $start);
+		$str = substr($string, $pos);
+		$str_two = substr($str, strlen($start));
+		$second_pos = stripos($str_two, $end);
+		$str_three = substr($str_two, 0, $second_pos);
+		$unit = trim($str_three); // remove whitespaces
+		 
+		return $unit;
 	}
 
 

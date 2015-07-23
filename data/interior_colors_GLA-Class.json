@@ -1,18 +1,38 @@
 [
    {
-      "color_code": "801_leather_black|rWF",
+      "color_code": "leather_black|rWF",
       "url_code": "rWF",
-      "name": "801_leather_black"
+      "name": "leather_black"
    },
    {
-      "color_code": "804_leather_nutbrown|rWe",
+      "color_code": "leather_hazel|rWe",
       "url_code": "rWe",
-      "name": "804_leather_nutbrown"
+      "name": "leather_hazel"
    },
    {
-      "color_code": "805_leather_saharabeige|rE7",
+      "color_code": "leather_saharabeige|rE7",
       "url_code": "rE7",
-      "name": "805_leather_saharabeige"
+      "name": "leather_saharabeige"
+   },
+   {
+      "color_code": "crystal_gray|Xhg",
+      "url_code": "Xhg",
+      "name": "crystal_gray"
+   },
+   {
+      "color_code": "fabric_black|XhF",
+      "url_code": "XhF",
+      "name": "fabric_black"
+   },
+   {
+      "color_code": "man_made_crystal_gray|aSg",
+      "url_code": "aSg",
+      "name": "man_mand_crystal_gray"
+   },
+   {
+      "color_code": "man_made_black|aSF",
+      "url_code": "aSF",
+      "name": "man_made_black"
    }
    
 ]

@@ -13,6 +13,31 @@
       "color_code": "805_leather_cranberryrot|0WL",
       "url_code": "0WL",
       "name": "805_leather_cranberryrot"
+   },
+   {
+      "color_code": "artico_man_made_crystal_gray|aSg",
+      "url_code": "aSg",
+      "name": "artico_man_made_crystal_gray"
+   },
+   {
+      "color_code": "artico_man_made_sahara_beige|aW7",
+      "url_code": "aW7",
+      "name": "artico_man_made_sahara_beige"
+   },
+   {
+      "color_code": "artico_man_made_black|aSF",
+      "url_code": "aSF",
+      "name": "artico_man_made_black"
+   },
+   {
+      "color_code": "fabric_vianen_crystal_gray|XYg",
+      "url_code": "XYg",
+      "name": "805_leather_cranberryrot"
+   },
+   {
+      "color_code": "fabric_vianen_black|XYF",
+      "url_code": "XYF",
+      "name": "fabric_vianen_black"
    }
    
 ]
